@@ -1,0 +1,557 @@
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+DROP TABLE IF EXISTS `almacen`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `almacen` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `codigo` varchar(255) DEFAULT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `telefono` varchar(15) DEFAULT NULL,
+  `codigo_telefono` varchar(10) DEFAULT '+51',
+  `tipo` int(11) DEFAULT NULL,
+  `estado` int(11) DEFAULT NULL,
+  `por_defecto` bit(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `banner`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `banner` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `imagen` varchar(255) DEFAULT NULL,
+  `descripcion` varchar(500) DEFAULT NULL,
+  `show_boton` bit(1) DEFAULT NULL,
+  `boton_texto` varchar(255) DEFAULT NULL,
+  `tipo_accion` int(11) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `accion` int(11) DEFAULT NULL,
+  `orden` int(11) DEFAULT NULL,
+  `estado` int(11) DEFAULT NULL,
+  `titulo` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `carrito`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `carrito` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `especificaciones` text DEFAULT NULL,
+  `sub_total` decimal(19,10) DEFAULT NULL,
+  `cliente_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKs7t94gt1b96owjf3itwku97lk` (`cliente_id`),
+  CONSTRAINT `FKs7t94gt1b96owjf3itwku97lk` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `carrito_detalle`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `carrito_detalle` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `cantidad` int(11) DEFAULT NULL,
+  `especificaciones` text DEFAULT NULL,
+  `precio_unitario` decimal(19,10) DEFAULT NULL,
+  `sub_total` decimal(19,10) DEFAULT NULL,
+  `carrito_id` bigint(20) DEFAULT NULL,
+  `producto_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK64qh3ohthoj94ehwxqfqfgrvu` (`carrito_id`),
+  KEY `FKsel9wcj28kn9lrj1cyqncyg0p` (`producto_id`),
+  CONSTRAINT `FK64qh3ohthoj94ehwxqfqfgrvu` FOREIGN KEY (`carrito_id`) REFERENCES `carrito` (`id`),
+  CONSTRAINT `FKsel9wcj28kn9lrj1cyqncyg0p` FOREIGN KEY (`producto_id`) REFERENCES `producto` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `categoria`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `categoria` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `estado` int(11) DEFAULT NULL,
+  `logo` varchar(255) DEFAULT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `cliente`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cliente` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `direccion` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `estado` int(11) DEFAULT NULL,
+  `numero_documento` varchar(255) DEFAULT NULL,
+  `razon_social` varchar(255) DEFAULT NULL,
+  `search` text DEFAULT NULL,
+  `telefono` varchar(255) DEFAULT NULL,
+  `tipo_documento` int(11) DEFAULT NULL,
+  `varios` bit(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `company`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `company` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `direccion` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `nombre_comercial` varchar(255) DEFAULT NULL,
+  `razon_social` varchar(255) DEFAULT NULL,
+  `ruc` varchar(255) DEFAULT NULL,
+  `telefono` varchar(255) DEFAULT NULL,
+  `ubigeo_id` bigint(20) DEFAULT NULL,
+  `email_contacto` varchar(255) DEFAULT NULL,
+  `email_info` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKbi434x4dm6spkl4pv4y7vore1` (`ubigeo_id`),
+  CONSTRAINT `FKbi434x4dm6spkl4pv4y7vore1` FOREIGN KEY (`ubigeo_id`) REFERENCES `ubigeo` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `company_configuracion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `company_configuracion` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `logo_cpe` varchar(255) DEFAULT NULL,
+  `logo_dashboard` varchar(255) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK9mjyekp6l3pf3ge4mns3rq05h` (`company_id`),
+  CONSTRAINT `FK9mjyekp6l3pf3ge4mns3rq05h` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `company_informacion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `company_informacion` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `filosofia` text DEFAULT NULL,
+  `historia` text DEFAULT NULL,
+  `mision` text DEFAULT NULL,
+  `vision` text DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  `google_map_iframe` text DEFAULT NULL,
+  `show_facebook` bit(1) DEFAULT NULL,
+  `show_linkedin` bit(1) DEFAULT NULL,
+  `show_whatsapp` bit(1) DEFAULT NULL,
+  `show_instagram` bit(1) DEFAULT NULL,
+  `instagram_url` varchar(255) DEFAULT NULL,
+  `facebook_url` varchar(255) DEFAULT NULL,
+  `linkedin_url` varchar(255) DEFAULT NULL,
+  `whatsapp_url` varchar(255) DEFAULT NULL,
+  `como_comprar_video` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK9um37odi84fgt3tg5bixhbjue` (`company_id`),
+  CONSTRAINT `FK9um37odi84fgt3tg5bixhbjue` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `company_mailer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `company_mailer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_id` bigint(20) DEFAULT NULL,
+  `mailer` varchar(15) DEFAULT 'smtp',
+  `mailhost` varchar(15) DEFAULT 'mailhog',
+  `port` int(11) DEFAULT 1025,
+  `username` varchar(100) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `encrytion` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKevrntaczocmuxuneohwbyrkxr` (`company_id`),
+  CONSTRAINT `FKevrntaczocmuxuneohwbyrkxr` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `company_sunat_configuracion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `company_sunat_configuracion` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `password` varchar(255) DEFAULT NULL,
+  `produccion` bit(1) DEFAULT NULL,
+  `ruc` varchar(255) DEFAULT NULL,
+  `usuario` varchar(255) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK8x1xvcm6vr2mqpiessxo618oy` (`company_id`),
+  CONSTRAINT `FK8x1xvcm6vr2mqpiessxo618oy` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `failed_jobs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `failed_jobs` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fct_documento_sunat`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fct_documento_sunat` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `cliente_direccion` varchar(255) DEFAULT NULL,
+  `cliente_email` varchar(255) DEFAULT NULL,
+  `cliente_numero_documento` varchar(255) DEFAULT NULL,
+  `cliente_razon_social` varchar(255) DEFAULT NULL,
+  `cliente_telefono` varchar(255) DEFAULT NULL,
+  `cliente_tipo_documento` int(11) DEFAULT NULL,
+  `correlativo` varchar(255) DEFAULT NULL,
+  `correlativo_numerico` int(11) DEFAULT NULL,
+  `estado` int(11) DEFAULT NULL,
+  `fecha_hora_emision` datetime(6) DEFAULT NULL,
+  `fecha_hora_envio` datetime(6) DEFAULT NULL,
+  `importe_venta` decimal(19,10) DEFAULT NULL,
+  `importe_venta_letras` varchar(255) DEFAULT NULL,
+  `monto_igv` decimal(19,10) DEFAULT NULL,
+  `nombre_archivo` varchar(255) DEFAULT NULL,
+  `numero_serie` varchar(255) DEFAULT NULL,
+  `op_exoneradas` decimal(19,10) DEFAULT NULL,
+  `op_gravadas` decimal(19,10) DEFAULT NULL,
+  `op_inafectas` decimal(19,10) DEFAULT NULL,
+  `response_cdr_codigo` int(11) DEFAULT NULL,
+  `response_cdr_descripcion` text DEFAULT NULL,
+  `search` text DEFAULT NULL,
+  `send_tries` int(11) DEFAULT NULL,
+  `serie` varchar(255) DEFAULT NULL,
+  `total_impuestos` decimal(19,10) DEFAULT NULL,
+  `ts_creacion` datetime(6) DEFAULT NULL,
+  `valor_venta` decimal(19,10) DEFAULT NULL,
+  `cliente_id` bigint(20) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  `tipo_documento_id` varchar(255) DEFAULT NULL,
+  `venta_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKst6kh4t8xllq3dm3absuqrbhr` (`cliente_id`),
+  KEY `FK4n1yo0juijtqj5qxypfvmkjp4` (`company_id`),
+  KEY `FKk0hu6bxgnvhey4ucdsp8ucf1e` (`tipo_documento_id`),
+  KEY `FKb00wis929vviux4s46te5ywbt` (`venta_id`),
+  CONSTRAINT `FK4n1yo0juijtqj5qxypfvmkjp4` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`),
+  CONSTRAINT `FKb00wis929vviux4s46te5ywbt` FOREIGN KEY (`venta_id`) REFERENCES `venta` (`id`),
+  CONSTRAINT `FKk0hu6bxgnvhey4ucdsp8ucf1e` FOREIGN KEY (`tipo_documento_id`) REFERENCES `tipo_documento` (`id`),
+  CONSTRAINT `FKst6kh4t8xllq3dm3absuqrbhr` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `fct_documento_sunat_archivo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fct_documento_sunat_archivo` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `html` mediumblob DEFAULT NULL,
+  `nombre_archivo` varchar(255) DEFAULT NULL,
+  `response_cdr` longblob DEFAULT NULL,
+  `xml` mediumblob DEFAULT NULL,
+  `documento_sunat_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKo5eubsllhhg4kkd0aaldxbflm` (`documento_sunat_id`),
+  CONSTRAINT `FKo5eubsllhhg4kkd0aaldxbflm` FOREIGN KEY (`documento_sunat_id`) REFERENCES `fct_documento_sunat` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `kardex`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `kardex` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `producto_id` bigint(20) NOT NULL,
+  `producto_presentacion_id` bigint(20) DEFAULT NULL,
+  `almacen_id` int(11) NOT NULL,
+  `fecha_hora_alta` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKtjalgoxmtlubwomhdhwsficxe` (`producto_id`),
+  KEY `FKpsldymrjupctllemangkhxgbf` (`producto_presentacion_id`),
+  KEY `FKrxzlfsesxlgftabrrfmtphqtw` (`almacen_id`),
+  CONSTRAINT `FKpsldymrjupctllemangkhxgbf` FOREIGN KEY (`producto_presentacion_id`) REFERENCES `producto_presentacion` (`id`),
+  CONSTRAINT `FKrxzlfsesxlgftabrrfmtphqtw` FOREIGN KEY (`almacen_id`) REFERENCES `almacen` (`id`),
+  CONSTRAINT `FKtjalgoxmtlubwomhdhwsficxe` FOREIGN KEY (`producto_id`) REFERENCES `producto` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `kardex_detalle`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `kardex_detalle` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `kardex_id` bigint(20) NOT NULL,
+  `tipo_operacion` varchar(10) DEFAULT NULL,
+  `fecha_hora_alta` datetime NOT NULL,
+  `cantidad` double DEFAULT NULL,
+  `fecha_hora_baja` datetime DEFAULT NULL,
+  `kardex_detalle_anterior_id` bigint(20) DEFAULT NULL,
+  `orden` int(11) DEFAULT 0,
+  `saldo` decimal(20,10) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKevrntaczocmuxuneohwbyrkwr` (`kardex_id`),
+  KEY `FKagoegtztxpwcoffhjibxsyhsw` (`kardex_detalle_anterior_id`),
+  CONSTRAINT `FKagoegtztxpwcoffhjibxsyhsw` FOREIGN KEY (`kardex_detalle_anterior_id`) REFERENCES `kardex_detalle` (`id`),
+  CONSTRAINT `FKevrntaczocmuxuneohwbyrkwr` FOREIGN KEY (`kardex_id`) REFERENCES `kardex` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `menu`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `menu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `is_child` bit(1) DEFAULT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `nombre` varchar(50) DEFAULT NULL,
+  `url` varchar(100) DEFAULT NULL,
+  `icon` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `metodo_pago`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `metodo_pago` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `migrations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `moneda`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `moneda` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `codigo_moneda` varchar(255) DEFAULT NULL,
+  `label_moneda` varchar(255) DEFAULT NULL,
+  `tipo_moneda` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `password_resets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `password_resets` (
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  KEY `password_resets_username_index` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `personal_access_tokens`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `personal_access_tokens` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint(20) unsigned NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `last_used_at` timestamp NULL DEFAULT NULL,
+  `expires_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
+  KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `producto`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `producto` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `codigo` varchar(255) DEFAULT NULL,
+  `estado` int(11) DEFAULT NULL,
+  `incluye_igv` bit(1) DEFAULT NULL,
+  `logo` varchar(255) DEFAULT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  `precio` double DEFAULT NULL,
+  `search` varchar(255) DEFAULT NULL,
+  `tiene_presentaciones` bit(1) DEFAULT NULL,
+  `tipo_afectacion` varchar(255) DEFAULT NULL,
+  `categoria_id` bigint(20) DEFAULT NULL,
+  `unidad_medida_id` bigint(20) DEFAULT NULL,
+  `descripcion` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKodqr7965ok9rwquj1utiamt0m` (`categoria_id`),
+  KEY `FK93g3ij13njajv7c0t8u4d6mun` (`unidad_medida_id`),
+  CONSTRAINT `FK93g3ij13njajv7c0t8u4d6mun` FOREIGN KEY (`unidad_medida_id`) REFERENCES `unidad_medida` (`id`),
+  CONSTRAINT `FKodqr7965ok9rwquj1utiamt0m` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `producto_imagen`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `producto_imagen` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `orden` int(11) DEFAULT NULL,
+  `principal` bit(1) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `producto_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKi1qiututau8b8vplg9rxog16k` (`producto_id`),
+  CONSTRAINT `FKi1qiututau8b8vplg9rxog16k` FOREIGN KEY (`producto_id`) REFERENCES `producto` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `producto_presentacion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `producto_presentacion` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `estado` int(11) DEFAULT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  `precio` double DEFAULT NULL,
+  `producto_id` bigint(20) DEFAULT NULL,
+  `por_defecto` bit(1) DEFAULT NULL,
+  `imagen` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKrshidwjy7mwlpb49ji6cxtm8o` (`producto_id`),
+  CONSTRAINT `FKrshidwjy7mwlpb49ji6cxtm8o` FOREIGN KEY (`producto_id`) REFERENCES `producto` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `sunat_certificado`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sunat_certificado` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `cer` text DEFAULT NULL,
+  `estado` int(11) DEFAULT NULL,
+  `nombre_archivo` varchar(255) DEFAULT NULL,
+  `pem` text DEFAULT NULL,
+  `ruc` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_jtxka4o8g7qxb5ik3hi0yew1r` (`nombre_archivo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `tipo_documento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tipo_documento` (
+  `id` varchar(255) NOT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `ubigeo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ubigeo` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `departamento` varchar(255) DEFAULT NULL,
+  `distrito` varchar(255) DEFAULT NULL,
+  `provincia` varchar(255) DEFAULT NULL,
+  `search` varchar(255) DEFAULT NULL,
+  `ubigeo` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `unidad_medida`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `unidad_medida` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `codigo` varchar(255) DEFAULT NULL,
+  `codigo_sunat` varchar(255) DEFAULT NULL,
+  `nombre` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `estado` int(11) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `company_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_r43af9ap4edm43mmtq01oddj6` (`username`),
+  KEY `FKbwv4uspmyi7xqjwcrgxow361t` (`company_id`),
+  CONSTRAINT `FKbwv4uspmyi7xqjwcrgxow361t` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `venta`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `venta` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `fecha_emision` datetime(6) DEFAULT NULL,
+  `importe_venta` decimal(19,10) DEFAULT NULL,
+  `importe_venta_letras` varchar(255) DEFAULT NULL,
+  `monto_devuelto` decimal(19,10) DEFAULT NULL,
+  `monto_igv` decimal(19,10) DEFAULT NULL,
+  `monto_recibido` decimal(19,10) DEFAULT NULL,
+  `op_exoneradas` decimal(19,10) DEFAULT NULL,
+  `op_gravadas` decimal(19,10) DEFAULT NULL,
+  `op_inafectas` decimal(19,10) DEFAULT NULL,
+  `total_impuestos` decimal(19,10) DEFAULT NULL,
+  `cliente_id` bigint(20) DEFAULT NULL,
+  `metodo_pago_id` bigint(20) DEFAULT NULL,
+  `moneda_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKa7yaj59nfh3gft0h38o5bv472` (`cliente_id`),
+  KEY `FKf246y4iq3sp3yytdond3luosf` (`metodo_pago_id`),
+  KEY `FKmjmdhs94bt3wc0t7cij0el3o0` (`moneda_id`),
+  CONSTRAINT `FKa7yaj59nfh3gft0h38o5bv472` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`),
+  CONSTRAINT `FKf246y4iq3sp3yytdond3luosf` FOREIGN KEY (`metodo_pago_id`) REFERENCES `metodo_pago` (`id`),
+  CONSTRAINT `FKmjmdhs94bt3wc0t7cij0el3o0` FOREIGN KEY (`moneda_id`) REFERENCES `moneda` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `venta_detalle`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `venta_detalle` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `cantidad` int(11) DEFAULT NULL,
+  `monto_base_igv` decimal(19,10) DEFAULT NULL,
+  `monto_valor_unitario` decimal(19,10) DEFAULT NULL,
+  `op_exoneradas` decimal(19,10) DEFAULT NULL,
+  `op_gravadas` decimal(19,10) DEFAULT NULL,
+  `op_inafectas` decimal(19,10) DEFAULT NULL,
+  `precio_unitario` decimal(19,10) DEFAULT NULL,
+  `precio_venta` decimal(19,10) DEFAULT NULL,
+  `producto_codigo` varchar(255) DEFAULT NULL,
+  `producto_descripcion` varchar(255) DEFAULT NULL,
+  `producto_tipo_afectacion` varchar(255) DEFAULT NULL,
+  `producto_unidad_medida_codigo` varchar(255) DEFAULT NULL,
+  `total_igv` decimal(19,10) DEFAULT NULL,
+  `valor_venta` decimal(19,10) DEFAULT NULL,
+  `producto_id` bigint(20) DEFAULT NULL,
+  `venta_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK9xigtgxpuxtk73l37ch7j61al` (`producto_id`),
+  KEY `FK49gsk3vfonl3vtivw0xs2w8yt` (`venta_id`),
+  CONSTRAINT `FK49gsk3vfonl3vtivw0xs2w8yt` FOREIGN KEY (`venta_id`) REFERENCES `venta` (`id`),
+  CONSTRAINT `FK9xigtgxpuxtk73l37ch7j61al` FOREIGN KEY (`producto_id`) REFERENCES `producto` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+INSERT INTO `migrations` VALUES (1,'2014_10_12_100000_create_password_resets_table',1);
+INSERT INTO `migrations` VALUES (2,'2019_08_19_000000_create_failed_jobs_table',1);
+INSERT INTO `migrations` VALUES (3,'2019_12_14_000001_create_personal_access_tokens_table',1);
