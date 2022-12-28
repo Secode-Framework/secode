@@ -5,7 +5,7 @@
     "keywords": [
         "framework",
         "laravel",
-        "secode"
+        "app/secode"
     ],
     "license": "MIT",
     "require": {
@@ -13,12 +13,12 @@
         "barryvdh/laravel-dompdf": "^2.0",
         "greenter/lite": "^4.3",
         "guzzlehttp/guzzle": "^7.2",
-        "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "luecano/numero-a-letras": "^3.0",
         "predis/predis": "^2.0",
-        "secode-framework/framework": "~1.0"
+        "secode-framework/framework": "~1.0",
+        "secode-framework/apifirst-generator": "~1.0"
     },
     "require-dev": {
         "brianium/paratest": "^6.6",
@@ -35,18 +35,23 @@
             "name": "secode-framework/framework",
             "type": "vcs",
             "url": "git@github.com:Secode-Framework/framework.git"
+        },
+        {
+            "name": "secode-framework/apifirst-generator",
+            "type": "vcs",
+            "url": "https://github.com/Secode-Framework/api-generator.git"
         }
     ],
     "autoload": {
         "psr-4": {
-            "App\\": "app/",
-            "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "App\\": "app/app",
+            "Database\\Factories\\": "app/database/factories/",
+            "Database\\Seeders\\": "app/database/seeders/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "app/tests/"
         }
     },
     "scripts": {
@@ -75,7 +80,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true
-        }
+        },
+        "vendor-dir": "app/vendor"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

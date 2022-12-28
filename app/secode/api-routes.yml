@@ -1,0 +1,490 @@
+type: group
+prefix:
+  type: function
+  value: environmentId
+function:
+  - {
+    type: group,
+    prefix: {
+      type: string,
+      value: api
+    },
+    middlewares: [
+      api
+    ],
+    function: [
+      {
+        type: group,
+        prefix: {
+          type: string,
+          value: v1
+        },
+        function: [
+          {
+            type: group,
+            prefix: {
+              type: string,
+              value: aplicacion
+            },
+            function: [
+              {
+                type: endpoints,
+                endpoints: {
+                  /: [
+                    {
+                      method: post,
+                      action: App\Http\Controllers\Admin\AplicacionControllerImpl@saveAplicacion,
+                      middlewares: [
+                        'auth:sanctum'
+                      ]
+                    },
+                    {
+                      method: get,
+                      action: App\Http\Controllers\Admin\AplicacionControllerImpl@listAplicacion,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ],
+                  '/activar/{id}': [
+                    {
+                      method: put,
+                      action: App\Http\Controllers\Admin\AplicacionControllerImpl@activarAplicacion,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ],
+                  '/desactivar/{id}': [
+                    {
+                      method: put,
+                      action: App\Http\Controllers\Admin\AplicacionControllerImpl@desactivarAplicacion,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ],
+                  '/{id}': [
+                    {
+                      method: post,
+                      action: App\Http\Controllers\Admin\AplicacionControllerImpl@updateAplicacion,
+                      middlewares: [
+                        'auth:sanctum'
+                      ]
+                    },
+                    {
+                      method: get,
+                      action: App\Http\Controllers\Admin\AplicacionControllerImpl@findAplicacion,
+                      middlewares: [
+                        'auth:sanctum'
+                      ]
+                    },
+                    {
+                      method: delete,
+                      action: App\Http\Controllers\Admin\AplicacionControllerImpl@deleteAplicacion,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ]
+                } }
+            ]
+          },
+          {
+            type: group,
+            prefix: {
+              type: string,
+              value: checkLogin
+            },
+            function: [
+              {
+                type: endpoints,
+                endpoints: {
+                  /: [
+                    {
+                      method: post,
+                      action: App\Http\Controllers\Admin\AuthControllerImpl@checkLogin,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ]
+                } }
+            ]
+          },
+          {
+            type: group,
+            prefix: {
+              type: string,
+              value: empresa
+            },
+            function: [
+              {
+                type: endpoints,
+                endpoints: {
+                  /: [
+                    {
+                      method: post,
+                      action: App\Http\Controllers\Admin\EmpresaControllerImpl@saveEmpresa,
+                      middlewares: [
+                        'auth:sanctum'
+                      ]
+                    },
+                    {
+                      method: get,
+                      action: App\Http\Controllers\Admin\EmpresaControllerImpl@listEmpresa,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ],
+                  '/activar/{id}': [
+                    {
+                      method: put,
+                      action: App\Http\Controllers\Admin\EmpresaControllerImpl@activarEmpresa,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ],
+                  /asignarPlan: [
+                    {
+                      method: post,
+                      action: App\Http\Controllers\Admin\EmpresaControllerImpl@savePlanEmpresa,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ],
+                  '/desactivar/{id}': [
+                    {
+                      method: put,
+                      action: App\Http\Controllers\Admin\EmpresaControllerImpl@desactivarEmpresa,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ],
+                  '/{id}': [
+                    {
+                      method: post,
+                      action: App\Http\Controllers\Admin\EmpresaControllerImpl@updateEmpresa,
+                      middlewares: [
+                        'auth:sanctum'
+                      ]
+                    },
+                    {
+                      method: get,
+                      action: App\Http\Controllers\Admin\EmpresaControllerImpl@findEmpresa,
+                      middlewares: [
+                        'auth:sanctum'
+                      ]
+                    },
+                    {
+                      method: delete,
+                      action: App\Http\Controllers\Admin\EmpresaControllerImpl@deleteEmpresa,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ]
+                } }
+            ]
+          },
+          {
+            type: group,
+            prefix: {
+              type: string,
+              value: login
+            },
+            function: [
+              {
+                type: endpoints,
+                endpoints: {
+                  /: [
+                    {
+                      method: post,
+                      action: App\Http\Controllers\Admin\AuthControllerImpl@login,
+                      middlewares: {
+
+                      } }
+                  ]
+                } }
+            ]
+          },
+          {
+            type: group,
+            prefix: {
+              type: string,
+              value: perfil
+            },
+            function: [
+              {
+                type: endpoints,
+                endpoints: {
+                  /: [
+                    {
+                      method: post,
+                      action: App\Http\Controllers\Admin\PerfilControllerImpl@savePerfil,
+                      middlewares: [
+                        'auth:sanctum'
+                      ]
+                    },
+                    {
+                      method: get,
+                      action: App\Http\Controllers\Admin\PerfilControllerImpl@listPerfil,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ],
+                  '/activar/{id}': [
+                    {
+                      method: put,
+                      action: App\Http\Controllers\Admin\PerfilControllerImpl@activarPerfil,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ],
+                  '/desactivar/{id}': [
+                    {
+                      method: put,
+                      action: App\Http\Controllers\Admin\PerfilControllerImpl@desactivarPerfil,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ],
+                  '/{id}': [
+                    {
+                      method: post,
+                      action: App\Http\Controllers\Admin\PerfilControllerImpl@updatePerfil,
+                      middlewares: [
+                        'auth:sanctum'
+                      ]
+                    },
+                    {
+                      method: get,
+                      action: App\Http\Controllers\Admin\PerfilControllerImpl@findPerfil,
+                      middlewares: [
+                        'auth:sanctum'
+                      ]
+                    },
+                    {
+                      method: delete,
+                      action: App\Http\Controllers\Admin\PerfilControllerImpl@deletePerfil,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ]
+                } }
+            ]
+          },
+          {
+            type: group,
+            prefix: {
+              type: string,
+              value: plan
+            },
+            function: [
+              {
+                type: endpoints,
+                endpoints: {
+                  /: [
+                    {
+                      method: post,
+                      action: App\Http\Controllers\Admin\PlanControllerImpl@savePlan,
+                      middlewares: [
+                        'auth:sanctum'
+                      ]
+                    },
+                    {
+                      method: get,
+                      action: App\Http\Controllers\Admin\PlanControllerImpl@listPlan,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ],
+                  '/activar/{id}': [
+                    {
+                      method: put,
+                      action: App\Http\Controllers\Admin\PlanControllerImpl@activarPlan,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ],
+                  '/desactivar/{id}': [
+                    {
+                      method: put,
+                      action: App\Http\Controllers\Admin\PlanControllerImpl@desactivarPlan,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ],
+                  '/{id}': [
+                    {
+                      method: post,
+                      action: App\Http\Controllers\Admin\PlanControllerImpl@updatePlan,
+                      middlewares: [
+                        'auth:sanctum'
+                      ]
+                    },
+                    {
+                      method: get,
+                      action: App\Http\Controllers\Admin\PlanControllerImpl@findPlan,
+                      middlewares: [
+                        'auth:sanctum'
+                      ]
+                    },
+                    {
+                      method: delete,
+                      action: App\Http\Controllers\Admin\PlanControllerImpl@deletePlan,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ]
+                } }
+            ]
+          },
+          {
+            type: group,
+            prefix: {
+              type: string,
+              value: registrar
+            },
+            function: [
+              {
+                type: endpoints,
+                endpoints: {
+                  /: [
+                    {
+                      method: post,
+                      action: App\Http\Controllers\Admin\AuthControllerImpl@registrar,
+                      middlewares: [
+                        secode
+                      ] }
+                  ]
+                } }
+            ]
+          },
+          {
+            type: group,
+            prefix: {
+              type: string,
+              value: servidor
+            },
+            function: [
+              {
+                type: endpoints,
+                endpoints: {
+                  /: [
+                    {
+                      method: post,
+                      action: App\Http\Controllers\Admin\ServidorControllerImpl@saveServidor,
+                      middlewares: [
+                        'auth:sanctum'
+                      ]
+                    },
+                    {
+                      method: get,
+                      action: App\Http\Controllers\Admin\ServidorControllerImpl@listServidor,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ],
+                  '/activar/{id}': [
+                    {
+                      method: put,
+                      action: App\Http\Controllers\Admin\ServidorControllerImpl@activarServidor,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ],
+                  '/desactivar/{id}': [
+                    {
+                      method: put,
+                      action: App\Http\Controllers\Admin\ServidorControllerImpl@desactivarServidor,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ],
+                  '/{id}': [
+                    {
+                      method: post,
+                      action: App\Http\Controllers\Admin\ServidorControllerImpl@updateServidor,
+                      middlewares: [
+                        'auth:sanctum'
+                      ]
+                    },
+                    {
+                      method: get,
+                      action: App\Http\Controllers\Admin\ServidorControllerImpl@findServidor,
+                      middlewares: [
+                        'auth:sanctum'
+                      ]
+                    },
+                    {
+                      method: delete,
+                      action: App\Http\Controllers\Admin\ServidorControllerImpl@deleteServidor,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ]
+                } }
+            ]
+          },
+          {
+            type: group,
+            prefix: {
+              type: string,
+              value: user
+            },
+            function: [
+              {
+                type: endpoints,
+                endpoints: {
+                  /: [
+                    {
+                      method: post,
+                      action: App\Http\Controllers\Admin\UserControllerImpl@saveUser,
+                      middlewares: [
+                        'auth:sanctum'
+                      ]
+                    },
+                    {
+                      method: get,
+                      action: App\Http\Controllers\Admin\UserControllerImpl@listUser,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ],
+                  '/activar/{id}': [
+                    {
+                      method: put,
+                      action: App\Http\Controllers\Admin\UserControllerImpl@activarUser,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ],
+                  '/desactivar/{id}': [
+                    {
+                      method: put,
+                      action: App\Http\Controllers\Admin\UserControllerImpl@desactivarUser,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ],
+                  '/{id}': [
+                    {
+                      method: post,
+                      action: App\Http\Controllers\Admin\UserControllerImpl@updateUser,
+                      middlewares: [
+                        'auth:sanctum'
+                      ]
+                    },
+                    {
+                      method: get,
+                      action: App\Http\Controllers\Admin\UserControllerImpl@findUser,
+                      middlewares: [
+                        'auth:sanctum'
+                      ]
+                    },
+                    {
+                      method: delete,
+                      action: App\Http\Controllers\Admin\UserControllerImpl@deleteUser,
+                      middlewares: [
+                        'auth:sanctum'
+                      ] }
+                  ]
+                } }
+            ] }
+        ] }
+    ] }
