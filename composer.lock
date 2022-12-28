@@ -3812,12 +3812,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:Secode-Framework/framework.git",
-                "reference": "23cb1d792dc72339d7929debfadeba6318981233"
+                "reference": "ff036b1133ea9c63e897dd3bd597cbf6ab3631a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Secode-Framework/framework/zipball/23cb1d792dc72339d7929debfadeba6318981233",
-                "reference": "23cb1d792dc72339d7929debfadeba6318981233",
+                "url": "https://api.github.com/repos/Secode-Framework/framework/zipball/ff036b1133ea9c63e897dd3bd597cbf6ab3631a2",
+                "reference": "ff036b1133ea9c63e897dd3bd597cbf6ab3631a2",
                 "shasum": ""
             },
             "require": {
@@ -3879,7 +3879,7 @@
                 "issues": "https://github.com/Secode-Framework/framework/issues",
                 "source": "https://github.com/Secode-Framework/framework"
             },
-            "time": "2022-12-28T03:21:22+00:00"
+            "time": "2022-12-28T03:55:00+00:00"
         },
         {
             "name": "symfony/console",

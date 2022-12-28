@@ -5,7 +5,7 @@
     "keywords": [
         "framework",
         "laravel",
-        "secode"
+        "app/secode"
     ],
     "license": "MIT",
     "require": {
@@ -44,14 +44,14 @@
     ],
     "autoload": {
         "psr-4": {
-            "App\\": "app/",
-            "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "App\\": "app/app",
+            "Database\\Factories\\": "app/database/factories/",
+            "Database\\Seeders\\": "app/database/seeders/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "app/tests/"
         }
     },
     "scripts": {
@@ -80,7 +80,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true
-        }
+        },
+        "vendor-dir": "app/vendor"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
