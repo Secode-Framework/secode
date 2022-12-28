@@ -135,6 +135,9 @@
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/doctrine/lexer" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/doctrine/instantiator" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/doctrine/inflector" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/yaml" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/nette/php-generator" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/secode-framework/apifirst-generator" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

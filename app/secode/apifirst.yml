@@ -15,24 +15,145 @@ info:
 servers:
   - url: https://gestion.secolectiva.com/des/api/v1
   - url: https://gestion.secolectiva.com/pro/api/v1
+x-ver: v1
 tags:
-  - name: perfil
+  - name: Auth
+    description: Todo lo relacionado a la authorización
+  - name: Perfil
     description: CRUD de perfil del usuario
-  - name: user
+  - name: User
     description: CRUD de usuario
-  - name: servidor
+  - name: Servidor
     description: CRUD de servidor
-  - name: aplicacion
+  - name: Aplicacion
     description: CRUD de aplicaciones
-  - name: empresa
+  - name: Empresa
     description: CRUD de empresas
-  - name: plan
+  - name: Plan
     description: CRUD de planes
 paths:
+  /login:
+    post:
+      x-controller-path: Admin
+      tags:
+        - Auth
+      summary: Login
+      description: Login
+      operationId: login
+      requestBody:
+        description: Login
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+        required: true
+      responses:
+        '200':
+          description: Logeo exitoso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessMessage'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SuccessMessage'
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /registrar:
+    post:
+      x-middlewares:
+        - secode
+      x-controller-path: Admin
+      tags:
+        - Auth
+      summary: Registro de usuario
+      description: Registro de usuario
+      operationId: registrar
+      requestBody:
+        description: Registro de usuario
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+        required: true
+      responses:
+        '200':
+          description: Se ha creado el usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessMessage'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SuccessMessage'
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+  /checkLogin:
+    post:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
+      tags:
+        - Auth
+      summary: Verificar si el token es correcto
+      description: Verificar si el token es correcto
+      operationId: checkLogin
+      requestBody:
+        description: Verificar si el token es correcto
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+        required: true
+      responses:
+        '200':
+          description: Se ha creado el usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessMessage'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SuccessMessage'
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
   /perfil:
     post:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - perfil
+        - Perfil
       summary: Guardar un perfil
       description: Guardar un perfil
       operationId: savePerfil
@@ -66,8 +187,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
     get:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - perfil
+        - Perfil
       summary: Listar perfiles no eliminados
       description: Listar perfiles no eliminados
       operationId: listPerfil
@@ -97,8 +221,11 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /perfil/{id}:
     post:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - perfil
+        - Perfil
       summary: Modificar un perfil existente
       description: Modificar un perfil existente
       operationId: updatePerfil
@@ -148,8 +275,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
     get:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - perfil
+        - Perfil
       summary: Buscar un perfil existente
       description: Buscar un perfil existente
       operationId: findPerfil
@@ -177,8 +307,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
     delete:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - perfil
+        - Perfil
       summary: Eliminar un perfil existente
       description: Eliminar un perfil existente
       operationId: deletePerfil
@@ -207,8 +340,11 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /perfil/activar/{id}:
     put:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - perfil
+        - Perfil
       summary: Activar un perfil existente
       description: Activar un perfil existente
       operationId: activarPerfil
@@ -240,11 +376,14 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /perfil/desactivar/{id}:
     put:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - perfil
+        - Perfil
       summary: Activar un perfil existente
       description: Activar un perfil existente
-      operationId: deactivarPerfil
+      operationId: desactivarPerfil
       parameters:
         - name: id
           in: path
@@ -273,8 +412,11 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /user:
     post:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - user
+        - User
       summary: Guardar un Usuario
       description: Guardar un Usuario
       operationId: saveUser
@@ -308,8 +450,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
     get:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - user
+        - User
       summary: Listar usuarios no eliminados
       description: Listar usuarios no eliminados
       operationId: listUser
@@ -339,8 +484,11 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /user/{id}:
     post:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - user
+        - User
       summary: Modificar un usuario existente
       description: Modificar un usuario existente
       operationId: updateUser
@@ -390,8 +538,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
     get:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - user
+        - User
       summary: Buscar un usuario existente
       description: Buscar un usuario existente
       operationId: findUser
@@ -422,8 +573,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
     delete:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - user
+        - User
       summary: Eliminar un usuario existente
       description: Eliminar un usuario existente
       operationId: deleteUser
@@ -455,8 +609,11 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /user/activar/{id}:
     put:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - user
+        - User
       summary: Activar un usuario existente
       description: Activar un usuario existente
       operationId: activarUser
@@ -488,11 +645,14 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /user/desactivar/{id}:
     put:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - user
+        - User
       summary: Desactivar un usuario existente
       description: Desactivar un usuario existente
-      operationId: deactivarUser
+      operationId: desactivarUser
       parameters:
         - name: id
           in: path
@@ -521,8 +681,11 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /servidor:
     post:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - servidor
+        - Servidor
       summary: Guardar un Servidor
       description: Guardar un Servidor
       operationId: saveServidor
@@ -556,8 +719,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
     get:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - servidor
+        - Servidor
       summary: Listar servidores no eliminados
       description: Listar servidores no eliminados
       operationId: listServidor
@@ -587,8 +753,11 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /servidor/{id}:
     post:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - servidor
+        - Servidor
       summary: Modificar un servidor existente
       description: Modificar un servidor existente
       operationId: updateServidor
@@ -638,8 +807,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
     get:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - servidor
+        - Servidor
       summary: Buscar un servidor existente
       description: Buscar un servidor existente
       operationId: findServidor
@@ -670,8 +842,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
     delete:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - servidor
+        - Servidor
       summary: Eliminar un servidor existente
       description: Eliminar un servidor existente
       operationId: deleteServidor
@@ -703,8 +878,11 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /servidor/activar/{id}:
     put:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - servidor
+        - Servidor
       summary: Activar un servidor existente
       description: Activar un servidor existente
       operationId: activarServidor
@@ -736,11 +914,14 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /servidor/desactivar/{id}:
     put:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - servidor
+        - Servidor
       summary: Desactivar un servidor existente
       description: Desactivar un servidor existente
-      operationId: deactivarServidor
+      operationId: desactivarServidor
       parameters:
         - name: id
           in: path
@@ -769,8 +950,11 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /aplicacion:
     post:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - aplicacion
+        - Aplicacion
       summary: Guardar una Aplicacion
       description: Guardar una Aplicacion
       operationId: saveAplicacion
@@ -804,8 +988,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
     get:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - aplicacion
+        - Aplicacion
       summary: Listar aplicaciones no eliminados
       description: Listar aplicaciones no eliminados
       operationId: listAplicacion
@@ -835,8 +1022,11 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /aplicacion/{id}:
     post:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - aplicacion
+        - Aplicacion
       summary: Modificar una aplicacion existente
       description: Modificar una aplicacion existente
       operationId: updateAplicacion
@@ -886,8 +1076,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
     get:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - aplicacion
+        - Aplicacion
       summary: Buscar una aplicacion existente
       description: Buscar una aplicacion existente
       operationId: findAplicacion
@@ -918,8 +1111,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
     delete:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - aplicacion
+        - Aplicacion
       summary: Eliminar una aplicacion existente
       description: Eliminar una aplicacion existente
       operationId: deleteAplicacion
@@ -951,8 +1147,11 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /aplicacion/activar/{id}:
     put:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - aplicacion
+        - Aplicacion
       summary: Activar una aplicacion existente
       description: Activar una aplicacion existente
       operationId: activarAplicacion
@@ -984,11 +1183,14 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /aplicacion/desactivar/{id}:
     put:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - aplicacion
+        - Aplicacion
       summary: Desactivar una aplicacion existente
       description: Desactivar una aplicacion existente
-      operationId: deactivarAplicacion
+      operationId: desactivarAplicacion
       parameters:
         - name: id
           in: path
@@ -1017,8 +1219,11 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /empresa:
     post:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - empresa
+        - Empresa
       summary: Guardar una Empresa
       description: Guardar una Empresa
       operationId: saveEmpresa
@@ -1052,8 +1257,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
     get:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - empresa
+        - Empresa
       summary: Listar empresaes no eliminados
       description: Listar empresaes no eliminados
       operationId: listEmpresa
@@ -1083,8 +1291,11 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /empresa/{id}:
     post:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - empresa
+        - Empresa
       summary: Modificar una empresa existente
       description: Modificar una empresa existente
       operationId: updateEmpresa
@@ -1134,8 +1345,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
     get:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - empresa
+        - Empresa
       summary: Buscar una empresa existente
       description: Buscar una empresa existente
       operationId: findEmpresa
@@ -1166,8 +1380,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
     delete:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - empresa
+        - Empresa
       summary: Eliminar una empresa existente
       description: Eliminar una empresa existente
       operationId: deleteEmpresa
@@ -1199,8 +1416,11 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /empresa/activar/{id}:
     put:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - empresa
+        - Empresa
       summary: Activar una empresa existente
       description: Activar una empresa existente
       operationId: activarEmpresa
@@ -1232,8 +1452,11 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /empresa/desactivar/{id}:
     put:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - empresa
+        - Empresa
       summary: Desactivar una empresa existente
       description: Desactivar una empresa existente
       operationId: desactivarEmpresa
@@ -1265,8 +1488,11 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /empresa/asignarPlan:
     post:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - empresa
+        - Empresa
       summary: Asignar un plan a la empresa
       description: Asignación de un plan a la empresa
       operationId: savePlanEmpresa
@@ -1307,8 +1533,11 @@ paths:
 
   /plan:
     post:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - plan
+        - Plan
       summary: Guardar un Plan
       description: Guardar un Plan
       operationId: savePlan
@@ -1342,8 +1571,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
     get:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - plan
+        - Plan
       summary: Listar planes no eliminados
       description: Listar planes no eliminados
       operationId: listPlan
@@ -1373,8 +1605,11 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /plan/{id}:
     post:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - plan
+        - Plan
       summary: Modificar un planes existente
       description: Modificar un planes existente
       operationId: updatePlan
@@ -1424,8 +1659,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
     get:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - plan
+        - Plan
       summary: Buscar un planes existente
       description: Buscar un planes existente
       operationId: findPlan
@@ -1456,8 +1694,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
     delete:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - plan
+        - Plan
       summary: Eliminar un planes existente
       description: Eliminar un planes existente
       operationId: deletePlan
@@ -1489,8 +1730,11 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /plan/activar/{id}:
     put:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - plan
+        - Plan
       summary: Activar un planes existente
       description: Activar un planes existente
       operationId: activarPlan
@@ -1522,11 +1766,14 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
   /plan/desactivar/{id}:
     put:
+      x-middlewares:
+        - auth:sanctum
+      x-controller-path: Admin
       tags:
-        - plan
+        - Plan
       summary: Desactivar un planes existente
       description: Desactivar un planes existente
-      operationId: deactivarPlan
+      operationId: desactivarPlan
       parameters:
         - name: id
           in: path
@@ -1588,6 +1835,7 @@ parameters:
 components:
   schemas:
     PaginatorResponse:
+      x-api-generator-ignore: true
       type: object
       properties:
         totalRows:
@@ -1600,21 +1848,24 @@ components:
           example: 2
         data:
           type: array
-          items:
-            oneOf:
-              - $ref: '#/components/schemas/User'
-              - $ref: '#/components/schemas/Perfil'
-              - $ref: '#/components/schemas/Servidor'
+          items: { }
     SuccessMessage:
+      x-api-generator-ignore: true
       type: object
       properties:
         success:
           type: boolean
           example: true
+        data:
+          type: object
+          additionalProperties:
+            type: string
+            example: Token xdxd
         message:
           type: string
           example: La operación se ha efectuado con éxito
     ErrorMessage:
+      x-api-generator-ignore: true
       type: object
       properties:
         success:
@@ -1672,6 +1923,15 @@ components:
           type: integer
           format: int64
           example: 1
+    UserLogin:
+      type: object
+      properties:
+        username:
+          type: string
+          example: theUser
+        password:
+          type: string
+          example: thePassword
     Empresa:
       type: object
       properties:
@@ -1843,4 +2103,4 @@ components:
         aplicaciones:
           type: array
           items:
-            $ref : '#/components/schemas/Aplicacion'
+            $ref: '#/components/schemas/Aplicacion'

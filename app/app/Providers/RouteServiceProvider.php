@@ -3,10 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Secode\Foundation\Provider\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -18,29 +17,6 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/home';
-
-    /**
-     * Define your route model bindings, pattern filters, and other route configuration.
-     *
-     * @return void
-     */
-    public function boot(): void
-    {
-        $this->configureRateLimiting();
-
-        $this->routes(function () {
-            Route::group(['prefix' => $this->app->environmentId()], function () {
-                Route::middleware('api')
-                    ->prefix('api')
-                    ->group(base_path('routes/api.php'));
-                Route::middleware('web')
-                    ->group(base_path('routes/web.php'));
-            });
-            Route::middleware('secode')
-                ->prefix('secode')
-                ->group(base_path('routes/secode.php'));
-        });
-    }
 
     /**
      * Configure the rate limiters for the application.

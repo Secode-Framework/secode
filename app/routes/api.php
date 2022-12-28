@@ -12,10 +12,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-//
-//foreach ($enviroments as $enviroment){
-//    Route::group()
-//}
+
 Route::group(['prefix' => 'v1'], function () {
     Route::group(['prefix' => 'users'], function () {
 

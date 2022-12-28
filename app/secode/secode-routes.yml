@@ -1,0 +1,5 @@
+type: endpoints
+endpoints:
+  /updateEnvironments:
+    method: post
+    action: App\Http\Controllers\Secode\MainController@updateEnvironments
